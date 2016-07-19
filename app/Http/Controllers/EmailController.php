@@ -69,14 +69,23 @@ class EmailController extends Controller
     }
 
     //将数据推送到发送队列中
-    public function addqueue()
+    public function beginSend()
     {
-        
+        $id = Input::get("id");
+        if (empty($id)) return $this->json(-1,'','参数错误');
+
+        PiciLog::where("id",$id)->where("status",'init')->update(['status'=>'sending']);
+        PiciLog::where("id",$id)->whereNull("send_time")->update(['send_time'=>date("Y-m-d H:i:s")]);
+        return $this->json(0);
     }
 
     //清空发送队列
-    public function clearqueue()
+    public function endSend()
     {
+        $id = Input::get("id");
+        if (empty($id)) return $this->json(-1,'','参数错误');
 
+        PiciLog::where("id",$id)->where("status",'sending')->update(['status'=>'init']);
+        return $this->json(0);
     }
 }

@@ -4,14 +4,12 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Services\UserService;
-use App\Services\CurlService;
-use App\Services\CommonService;
+use App\Services\EmailSerivce;
+use App\Models\PiciLog;
 use View;
 use Log;
-use Hash;
 
-class test extends Command
+class sendEmail extends Command
 {
     use DispatchesJobs;
 
@@ -20,7 +18,7 @@ class test extends Command
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'send_email';
 
     /**
      * The console command description.
@@ -46,24 +44,13 @@ class test extends Command
      */
     public function handle()
     {
-        $uuid = CommonService::getuuid();
-        var_dump($uuid);
+        $pics = PiciLog::where('status','sending')->get();
 
-        die;
-
-
-        try 
+        // var_dump($pics);die;
+        foreach ($pics as $pic) 
         {
-            $i = 1/0;
-        } catch (\Exception $e) 
-        {
-            var_dump("insertemail_failed: $email  exception_message:" . $e->getMessage());
+            EmailSerivce::sendPiciEmail($pic);
         }
-
-
-        $e = "$email is not email skip";
-        var_dump($e);
-
     }
 }
 

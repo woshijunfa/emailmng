@@ -120,6 +120,13 @@ class CommonService
 
         return view('estyle.' . $style,['obj'=>$htmlContent])->render();
     }
+
+
+    public static function getuuid()
+    {
+        $pid = getmypid();
+        return $pid. '-' . uniqid();
+    }
 }
 
 

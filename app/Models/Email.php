@@ -40,7 +40,8 @@ class Email extends Model
                             'tag',
                             'ip',
                             'is_valid',
-                            'pici'
+                            'pici',
+                            'uuid'
                             ];
 
     //注册用户

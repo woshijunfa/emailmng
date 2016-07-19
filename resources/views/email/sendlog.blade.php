@@ -41,8 +41,12 @@
 					<td>{{ $log->success_count or '' }}</td>
 					<td>{{ $log->getStatus() }}</td>
 					<td>
-						<button onclick="javascript:addqueue({{$log->id}})" class="btn btn-white btn-sm btn-primary">添加队列</button>
-						<button onclick="javascript:clearqueue({{$log->id}})" class="btn btn-white btn-sm btn-primary">清空队列</button>
+						@if($log->status == 'init')
+						<button onclick="javascript:beginSend({{$log->id}})" class="btn btn-white btn-sm btn-primary">开始发送</button>
+						@endif
+						@if($log->status == 'sending')
+						<button onclick="javascript:endSend({{$log->id}})" class="btn btn-white btn-sm btn-primary">停止发送</button>
+						@endif
 					</td>
 				</tr>
 				@endforeach
@@ -54,38 +58,38 @@
 
 <script type="text/javascript">
 	
-	function addqueue(id)
+	function beginSend(id)
 	{
 		var postdata = {};
 		postdata['id'] = id;
 		postdata['_token'] = '{{csrf_token()}}';
 
         //登录操作
-        $.post('/email/pici/addqueue', postdata,
+        $.post('/email/pici/beginsend', postdata,
         function(data){
             if (data.code !=0) {
             	alert(data.message);
             }else{
-            	alert("添加成功");
+            	alert("操作成功");
             	window.location.href=window.location.href;
             }
 
         });
 	}
 
-	function clearqueue(id)
+	function endSend(id)
 	{
 		var postdata = {};
 		postdata['id'] = id;
 		postdata['_token'] = '{{csrf_token()}}';
 
         //登录操作
-        $.post('/email/pici/clearqueue', postdata,
+        $.post('/email/pici/endsend', postdata,
         function(data){
             if (data.code !=0) {
             	alert(data.message);
             }else{
-            	alert("添加成功");
+            	alert("操作成功");
             	window.location.href=window.location.href;
             }
 

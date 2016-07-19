@@ -23,7 +23,7 @@ class EmailSerivce
      * @param array $receiver 接收人 array('receiver@domain.org', 'other@domain.org' => 'A name')
      * @return int
      */
-    public static function sendEmail($title , $content , $receiver = null)
+    public static function sendEmail($title , $content , $receiver)
     {
         try 
         {
@@ -43,22 +43,17 @@ class EmailSerivce
             $mailer = \Swift_Mailer::newInstance($transport);
             $message = \Swift_Message::newInstance();
             $message->setFrom([$userName => 'ShareApi']);
-
-            if(empty($receiver)){
-                $message->setTo(config("mail.exception_receiver"));
-            }else
-            {
-                $message->setTo($receiver);
-            }
+            $message->setTo($receiver);
             $message->setSubject($title);
             $message->setBody($content, 'text/html', 'utf-8');
             $r = $mailer->send($message);
-            return $r;
+            return true;
         }
         catch (\Exception $e) 
         {
             Log::info("EmailSerivce::sendEmail 发生异常失败");
             Log::info($e);
+            return false;
         }
     }
 
@@ -121,27 +116,67 @@ class EmailSerivce
     }
 
     //发送批次邮件
-    static public function sendPiciEmail($piciLogId,$contentId)
+    static public function sendPiciEmail($logInfo)
     {
-        $logInfo = PiciLog::where('id',$piciLogId)->first();
-        if (empty($logInfo) || empty($logInfo->pici)) return false;
-
         //已经发送完成则不再发送
         if (!empty($logInfo->end_time) && $logInfo->end_time >= $logInfo->send_time) return true;
 
+
+
         //循环发送邮件
-        $beginId = 0;
-        // while (true) 
+        $perCount = 10;
+        while (true) 
         {
+            $uuid =  CommonService::getuuid();
+            $sendTime = date("Y-m-d H:i:s");
+            $updateInfo = [
+                'last_send_time' => $sendTime,
+                'uuid' => $uuid
+            ];
+
+            //标记发送时间和uuid
+            $count = Email::where('pici',$logInfo->pici)
+                            ->where('is_valid',1)
+                            ->where('last_send_time','<',$logInfo->send_time)
+                            ->take($perCount)
+                            ->update($updateInfo);
+            var_dump("update fetch email count:$count");
+            //发送完成
+            if ($count <= 0)
+            {
+                $logInfo->sendOk();
+                return true;
+            } 
+
             //循环发送
-            $ids = Email::where('pici',$logInfo->pici)
-                        ->where('last_send_time','<',$logInfo->send_time)
-                        ->where('id','>',$beginId)
-                        ->list('id');
-            //推入到
-            var_dump($ids);
+            $emails = Email::where('pici',$logInfo->pici)
+                        ->where('last_send_time',$sendTime)
+                        ->where('uuid',$uuid)
+                        ->get();
+
+            self::sendEmailsOfContent($emails,$logInfo);
         }
 
+    }
+
+    static public function sendEmailsOfContent($emails,$logInfo)
+    {
+        if(empty($emails) || empty($logInfo)) return false;
+
+        $title = $logInfo->title;
+        $content = CommonService::renderContent($logInfo->content_id);
+
+        $successCount = 0;
+        foreach($emails as $email)
+        {
+            $isSuccess = self::sendEmail($title,$content,[$email->email => $email->email]);
+            Log::info("发送邮件 ". $email->email . ":$title 批次：" . $logInfo->id . " success:" . $isSuccess);
+            var_dump("发送邮件 ". $email->email . ":$title 批次：" . $logInfo->id . " success:" . $isSuccess);
+            if($isSuccess)  $successCount++ ;
+        }
+
+        //更新成功和失败数量
+        PiciLog::where('id',$logInfo->id)->increment('success_count',$successCount);
     }
 }
 

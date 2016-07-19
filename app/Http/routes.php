@@ -42,6 +42,6 @@ Route::post('/content/addpost',"ContentController@addpost");
 
 //发送管理
 Route::get('/sendlog', 'EmailController@sendlog');
-Route::post('/email/pici/addqueue',"EmailController@addqueue");
-Route::post('/email/pici/clearqueue',"EmailController@clearqueue");
+Route::post('/email/pici/beginsend',"EmailController@beginSend");
+Route::post('/email/pici/endsend',"EmailController@endSend");
 

@@ -77,4 +77,9 @@ class PiciLog extends Model
 
         return !empty($list[$this->status]) ? $list[$this->status] : '未知';
     }
+
+    public function sendOk()
+    {
+        self::where('id',$this->id)->where('status','sending')->update(['status'=>'end']);
+    }
 }
