@@ -11,6 +11,7 @@ use Log;
 use Config;
 use View;
 use App\Models\Email;
+use App\Models\PiciLog;
 
 class EmailSerivce
 {
@@ -117,6 +118,30 @@ class EmailSerivce
         }
 
         return true;
+    }
+
+    //发送批次邮件
+    static public function sendPiciEmail($piciLogId,$contentId)
+    {
+        $logInfo = PiciLog::where('id',$piciLogId)->first();
+        if (empty($logInfo) || empty($logInfo->pici)) return false;
+
+        //已经发送完成则不再发送
+        if (!empty($logInfo->end_time) && $logInfo->end_time >= $logInfo->send_time) return true;
+
+        //循环发送邮件
+        $beginId = 0;
+        // while (true) 
+        {
+            //循环发送
+            $ids = Email::where('pici',$logInfo->pici)
+                        ->where('last_send_time','<',$logInfo->send_time)
+                        ->where('id','>',$beginId)
+                        ->list('id');
+            //推入到
+            var_dump($ids);
+        }
+
     }
 }
 

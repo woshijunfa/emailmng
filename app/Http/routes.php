@@ -33,6 +33,15 @@
 
 
 Route::get('/', 'EmailController@index');
-Route::get('/content', 'ContentController@index');
+Route::post('/email/addpici',"EmailController@addpici");
 
+Route::get('/content', 'ContentController@index');
+Route::get('/content/add', 'ContentController@add');
+Route::get('/content/show/{id}', 'ContentController@show');
+Route::post('/content/addpost',"ContentController@addpost");
+
+//发送管理
+Route::get('/sendlog', 'EmailController@sendlog');
+Route::post('/email/pici/addqueue',"EmailController@addqueue");
+Route::post('/email/pici/clearqueue',"EmailController@clearqueue");
 

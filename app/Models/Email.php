@@ -38,7 +38,9 @@ class Email extends Model
                             'created_at',
                             'updated_at',
                             'tag',
-                            'ip'
+                            'ip',
+                            'is_valid',
+                            'pici'
                             ];
 
     //注册用户

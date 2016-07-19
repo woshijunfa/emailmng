@@ -45,6 +45,10 @@ class test extends Command
      */
     public function handle()
     {
+        $e = "j-lequar@kellogg.northwestern.edu";
+
+        var_dump(gIsEmail($e));
+die;
         var_dump(Hash::make('12345678'));
 die;
         $email = ' sdf asdf';

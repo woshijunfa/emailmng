@@ -30,6 +30,8 @@
 
 		<!-- inline styles related to this page -->
 
+		<script src="/assets/js/jquery.js"></script>
+		<link rel="stylesheet" href="../assets/css/jquery-ui.custom.css" />
 		<!-- ace settings handler -->
 		<script src="../assets/js/ace-extra.js"></script>
 
@@ -156,6 +158,13 @@
 						<b class="arrow fa fa-angle-down"></b>
 					</li>
 
+					<li>
+						<a href="/sendlog">
+							<i class="menu-icon fa fa-desktop"></i>
+							<span class="menu-text"> 发送管理 </span>
+						</a>
+						<b class="arrow fa fa-angle-down"></b>
+					</li>
 <!--				<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
@@ -378,6 +387,11 @@
 				</div>
 			</div><!-- /.main-content -->
 
+			<script type="text/javascript">
+				var $path_assets = "../assets";//this will be used in loading jQuery UI if needed!
+			</script>
+
+
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
@@ -386,10 +400,10 @@
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 			window.jQuery || document.write("<script src='../assets/js/jquery.js'>"+"<"+"/script>");
 		</script>
-
+ -->
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -407,6 +421,12 @@
 		<!--[if lte IE 8]>
 		  <script src="../assets/js/excanvas.js"></script>
 		<![endif]-->
+
+		<script src="../assets/js/markdown/markdown.js"></script>
+		<script src="../assets/js/markdown/bootstrap-markdown.js"></script>
+		<script src="../assets/js/jquery.hotkeys.js"></script>
+		<script src="../assets/js/bootstrap-wysiwyg.js"></script>
+		<script src="../assets/js/bootbox.js"></script>
 		<script src="../assets/js/jquery-ui.custom.js"></script>
 		<script src="../assets/js/jquery.ui.touch-punch.js"></script>
 		<script src="../assets/js/jquery.easypiechart.js"></script>

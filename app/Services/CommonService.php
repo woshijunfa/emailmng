@@ -8,6 +8,7 @@
 
 namespace App\Services;
 use App\Models\UserSmsLog;
+use App\Models\Content;
 use App\Services\EmailSerivce;
 use Log;
 use Config;
@@ -111,6 +112,14 @@ class CommonService
 		return true;
     }
 
+    //渲染id和风格
+    public static function renderContent($id,$style='default')
+    {
+        $htmlContent = Content::where("id",$id)->first();
+        if (empty($htmlContent) || empty($htmlContent->h_content)) return false;
+
+        return view('estyle.' . $style,['obj'=>$htmlContent])->render();
+    }
 }
 
 

@@ -4,7 +4,7 @@ if (! function_exists('gIsEmail'))
 {
 	function gIsEmail($email)
 	{
-		$pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i";
+		$pattern = "/^([0-9A-Za-z\\-_\\.]+)@(([0-9a-z]+\\.[a-z]{2,15}){1,5}(\\.[a-z]{2,5}))$/i";
 		return preg_match($pattern,$email);
 	}
 
