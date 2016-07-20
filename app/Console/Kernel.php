@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\importEmail::class,
         \App\Console\Commands\test::class,
+        \App\Console\Commands\tieba::class,
         \App\Console\Commands\sendEmail::class,
     ];
 

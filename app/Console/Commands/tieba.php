@@ -4,15 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Services\UserService;
-use App\Services\CurlService;
-use App\Services\CommonService;
-use App\Models\Dict;
-use View;
-use Log;
-use Hash;
+use App\Services\TiebaService;
 
-class test extends Command
+class tieba extends Command
 {
     use DispatchesJobs;
 
@@ -21,7 +15,7 @@ class test extends Command
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'tieba';
 
     /**
      * The console command description.
@@ -47,13 +41,8 @@ class test extends Command
      */
     public function handle()
     {
-        $result = Dict::getBegin(1);
-        var_dump($result);
+        $obj = new TiebaService();
+        $obj->run();
+
     }
 }
-
-
-
-
-
-

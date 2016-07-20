@@ -127,6 +127,34 @@ class CommonService
         $pid = getmypid();
         return $pid. '-' . uniqid();
     }
+
+    /**
+     * curl工具方法
+     * @param $url 请求地址
+     * @param string $requestType 请求方式 post 或 get
+     * @param array $data post 请求数据
+     * @param int $timeout 请求超时
+     * @return mixed
+     */
+    public static function curlRequest($url, $requestType = "get", 
+        $data = array(), $timeout = 10)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        if (strtolower($requestType) == 'post') {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        }
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
+    }
 }
 
 
