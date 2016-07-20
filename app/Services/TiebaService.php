@@ -9,7 +9,7 @@ class TiebaService
 	//配置内容区域
 	var $care_content_reg = "/([a-z0-9\-_\.]+@[a-z0-9]+\.com)/";
   	var $page = 0;
-	var $depth = 20; 		//最大循环次数 
+	var $depth = 1000; 		//最大循环次数 
 	var $contentList = [];
 
 

@@ -26,8 +26,8 @@ CREATE TABLE `content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `m_content` mediumtext,
   `h_content` mediumtext,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL,
   `is_valid` tinyint(4) NOT NULL DEFAULT '1',
   `title` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
@@ -45,8 +45,8 @@ CREATE TABLE `dicts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(45) NOT NULL DEFAULT '',
   `value` varchar(45) NOT NULL DEFAULT '',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -62,9 +62,9 @@ CREATE TABLE `email` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(45) NOT NULL DEFAULT '',
   `type` varchar(20) NOT NULL DEFAULT '',
-  `last_send_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_send_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
   `tag` varchar(45) NOT NULL DEFAULT '',
   `ip` varchar(15) NOT NULL DEFAULT '',
   `is_valid` tinyint(4) NOT NULL DEFAULT '1',
@@ -85,8 +85,8 @@ DROP TABLE IF EXISTS `pici`;
 CREATE TABLE `pici` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pici` varchar(45) NOT NULL DEFAULT '',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pici_UNIQUE` (`pici`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -102,13 +102,13 @@ DROP TABLE IF EXISTS `pici_log`;
 CREATE TABLE `pici_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pici` varchar(45) NOT NULL DEFAULT '',
-  `send_time` timestamp NULL DEFAULT NULL,
-  `end_time` timestamp NULL DEFAULT NULL,
+  `send_time` TIMESTAMP NULL DEFAULT NULL,
+  `end_time` TIMESTAMP NULL DEFAULT NULL,
   `total_count` int(11) NOT NULL DEFAULT '0',
   `success_count` int(11) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL DEFAULT '',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL,
   `content_id` int(11) NOT NULL DEFAULT '0',
   `status` varchar(45) NOT NULL DEFAULT 'init',
   PRIMARY KEY (`id`)
