@@ -28,6 +28,8 @@ class TiebaService
 			return false;
 		}
 
+        Log::info("----beginstart from:" . $this->page ." count:" . $this->depth);
+
 		for($i=0;$i<$this->depth;$i++) 
 		{
 			$this->scanfTopic($this->page);
