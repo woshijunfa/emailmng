@@ -43,6 +43,5 @@ class tieba extends Command
     {
         $obj = new TiebaService();
         $obj->run();
-
     }
 }
