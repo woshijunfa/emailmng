@@ -4,7 +4,7 @@ if (! function_exists('gIsEmail'))
 {
 	function gIsEmail($email)
 	{
-		$pattern = "/^([0-9A-Za-z\\-_\\.]+)@(([0-9a-z]+\\.[a-z]{2,15}){1,5}(\\.[a-z]{2,5}))$/i";
+        $pattern = "/^([0-9A-Za-z\\-_\\.]+)@(([0-9a-z]+\\.){1,5}([a-z]{2,5}))$/i";
 		return preg_match($pattern,$email);
 	}
 
@@ -38,6 +38,18 @@ if (! function_exists('gIsEmail'))
         $pattern = "/([a-z0-9\-_\.]+@[a-z0-9]+\.[a-z0-9\-_\.]+)/"; 
         preg_match_all($pattern,$str,$emailArr); 
         return $emailArr[0]; 
+    }
+
+    function gGetQQEmail($str) 
+    {                 
+        if (empty($str)) return [];
+
+        //匹配邮箱内容
+        $pattern = "/([1-9][0-9]{5,9}@qq\.com)/"; 
+        preg_match_all($pattern,$str,$emailArr); 
+        $result = $emailArr[0]; 
+
+        return count($result) > 0 ? $result[0] : ''; 
     }
 
     //php生成GUID

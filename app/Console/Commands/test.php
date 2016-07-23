@@ -8,6 +8,7 @@ use App\Services\UserService;
 use App\Services\CurlService;
 use App\Services\CommonService;
 use App\Models\Dict;
+use App\Models\Email;
 use View;
 use Log;
 use Hash;
@@ -47,6 +48,12 @@ class test extends Command
      */
     public function handle()
     {
+        $result = Email::insertMail("u3002410025473@qq.com",'tieba');
+        var_dump($result);die;
+        die;
+        $result = gGetQQEmail("ud0988888@qq.com");
+
+        var_dump($result);die;
         $result = Dict::getBegin(1);
         var_dump($result);
     }

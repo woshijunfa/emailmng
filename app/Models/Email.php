@@ -56,6 +56,17 @@ class Email extends Model
             return false;
         }
 
+        $type = gGetEmailType($email);
+        if ($type == 'qq') 
+        {
+            $email = gGetQQEmail($email);
+            if (empty($email))
+            {
+                Log::info("insertemail_failed:$email is not email skip");
+                return false;
+            } 
+        }
+
         $emailInfo = [];
         $emailInfo['email'] = $email;
         $emailInfo['type'] = gGetEmailType($email);
